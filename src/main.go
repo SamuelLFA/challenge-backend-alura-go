@@ -1,8 +1,7 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import "challenge/src/routes"
 
 func main() {
-	r := gin.Default()
-	r.Run(":3333")
+	routes.HandleRequest()
 }
