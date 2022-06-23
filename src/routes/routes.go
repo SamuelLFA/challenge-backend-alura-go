@@ -18,8 +18,10 @@ func HandleRequest() {
 	importService := service.ImportServiceFactory(db)
 	transactionService := service.TransactionServiceFactory(db, importService)
 	formController := controller.FormControllerFactory(fileService, transactionService)
+	importController := controller.ImportControllerFactory(importService)
 
 	r.POST("/form", formController.Upload)
+	r.GET("/imports", importController.FindAll)
 
 	r.Run(":3333")
 }
