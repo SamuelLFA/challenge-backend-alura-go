@@ -30,8 +30,17 @@ func (c *FormController) Upload(ctx *gin.Context) {
 	}
 
 	var models []model.Transaction
-	c.fileService.ParseLines(string(fileBytes), &models)
-	c.transactionService.Save(models)
+	if err = c.fileService.ParseLines(string(fileBytes), &models); err != nil {
+		log.Println(err)
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Failed to parse file"))
+		return
+	}
+
+	if err = c.transactionService.Save(models); err != nil {
+		log.Println(err)
+		ctx.String(http.StatusBadRequest, err.Error())
+		return
+	}
 
 	ctx.String(http.StatusOK, fmt.Sprintf("%s Uploaded!", handler.Filename))
 }

@@ -20,7 +20,7 @@ func (f *FileService) ParseLines(text string, transactions *[]model.Transaction)
 	for _, line := range lines {
 		transaction, err := stringToTransaction(line)
 		if err != nil {
-			return err
+			continue
 		}
 		*transactions = append(*transactions, *transaction)
 	}
