@@ -13,8 +13,10 @@ func HandleRequest() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
+	db := database.DB
 	fileService := service.FileServiceFactory()
-	transactionService := service.TransactionServiceFactory(database.DB)
+	importService := service.ImportServiceFactory(db)
+	transactionService := service.TransactionServiceFactory(db, importService)
 	formController := controller.FormControllerFactory(fileService, transactionService)
 
 	r.POST("/form", formController.Upload)

@@ -30,4 +30,5 @@ func ConnectWithDatabase() {
 	}
 
 	DB.AutoMigrate(&model.TransactionModel{})
+	DB.AutoMigrate(&model.ImportModel{})
 }
